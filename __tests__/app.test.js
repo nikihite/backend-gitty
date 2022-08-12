@@ -44,6 +44,19 @@ describe('why-i-autha routes', () => {
     ]));
   });
 
+  it('should create a new post to /api/v1/posts', async () => {
+    const newPost = { posts: 'Niki is the BEST' };
+    await agent.post('/api/v1/github/callback?code=42');
+    const res = await agent.post('/api/v1/posts').send(newPost);
+    
+    expect(res.body).toEqual(
+      {
+        'id': expect.any(String),
+        'posts': 'Niki is the BEST',
+      }
+    );
+  });
+
   afterAll(() => {
     pool.end();
   });
